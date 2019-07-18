@@ -38,6 +38,7 @@ public class App
                 .withQueueUrl(queueUrl)
                 .withMessageBody(msg)
                 .withDelaySeconds(5);
+
         sqs.sendMessage(send_msg_request);
 
 
@@ -45,11 +46,17 @@ public class App
         // receive messages from the queue
         List<Message> messages = sqs.receiveMessage(queueUrl).getMessages();
 
-        // delete messages from the queue
-        for (Message m : messages) {
-            System.out.println(m.getBody());
-            sqs.deleteMessage(queueUrl, m.getReceiptHandle());
+        while(messages.size() > 0) {
+
+            // delete messages from the queue
+            for (Message m : messages) {
+                System.out.println(m.getBody());
+                sqs.deleteMessage(queueUrl, m.getReceiptHandle());
+            }
+
+            messages = sqs.receiveMessage(queueUrl).getMessages();
         }
+
     }
 
 
