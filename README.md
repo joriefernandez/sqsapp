@@ -1,4 +1,5 @@
 # SQS Application
+Uses AWS Simple Queue Service that accepts message and sends it to the corresponding queue.
 
 ## Setting-up
 1. Add AWS SQS Full access to the user policy.
